@@ -1,77 +1,32 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
+
 const QRCode = require('qrcode');
-const crypto = require('crypto');
+const Token = require('../models/token');
 
-function generateToken() {
-  return crypto.randomBytes(16).toString('hex');
-}
-
-function validateToken(token) {
-  if (!token || typeof token !== 'string') {
-    return false;
-  }
-  if (!/^[a-f0-9]{32}$/. test(token)) {
-    return false;
-  }
-  return true;
-}
-
-router.post('/generate', async (req, res) => {
+router.post('/api/qrcode', async (req, res) => {
   try {
-    const { data } = req.body;
-    const tokenData = data || generateToken();
-    if (tokenData.length > 2953) {
-      return res.status(400).json({
-        success: false,
-        error: 'Data too long for QR code'
-      });
-    }
-    const qrcodeDataUrl = await QRCode.toDataURL(tokenData, {
-      errorCorrectionLevel: 'H',
-      type: 'image/png',
-      width: 300,
-      margin:  1,
-      color: {
-        dark: '#000000',
-        light: '#FFFFFF'
-      }
-    });
-    res.status(200).json({
-      success: true,
-      token: tokenData,
-      qrcode: qrcodeDataUrl
-    });
-  } catch (error) {
-    console.error('QR Code Generation Error:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Failed to generate QR code'
-    });
-  }
-});
+    const token = req.body.token;
 
-router.post('/validate', (req, res) => {
-  try {
-    const { token } = req.body;
-    if (!token) {
-      return res.status(400).json({
-        success: false,
-        error: 'Token is required'
-      });
+    if (!token) return res.status(400).json({ error: 'Token is required' });
+
+    if (!/^[a-f0-9]{32}$/.test(token)) {
+      return res.status(400).json({ error: 'Invalid token format' });
     }
-    const isValid = validateToken(token);
-    res.status(200).json({
-      success: true,
-      valid: isValid,
-      message: isValid ? 'Token is valid' : 'Token is invalid'
-    });
+
+    const tokenData = await Token.findOne({ token: token });
+
+    if (!tokenData) {
+      return res.status(404).json({ error: 'Token not found' });
+    }
+
+    const qrCodeDataUrl = await QRCode.toDataURL(token);
+
+    res.json({ qrCode: qrCodeDataUrl });
   } catch (error) {
-    console.error('Token Validation Error:', error);
-    res.status(500).json({
-      success: false,
-      error:  'Failed to validate token'
-    });
+    console.error('QR Code generation error:', error);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
