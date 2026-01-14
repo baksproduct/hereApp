@@ -1,0 +1,47 @@
+.splash-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.matrix-canvas {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.loading-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+  /* Stiluri pentru a se potrivi perfect cu fundalul */
+  font-family: monospace; /* Același font ca în canvas */
+  font-size: 14px;        /* Aceeași mărime */
+  color: #888888;         /* Un gri vizibil, dar subtil */
+  letter-spacing: 5px;    /* Spațiere pentru aspect "tech" */
+  font-weight: normal;    /* Fără îngroșare */
+  
+  z-index: 2;
+  
+  /* Animația de pulsare */
+  animation: pulse 2s infinite ease-in-out;
+}
+
+/* Definim animația */
+@keyframes pulse {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}

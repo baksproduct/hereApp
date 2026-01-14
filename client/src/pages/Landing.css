@@ -1,0 +1,278 @@
+/* --- LAYOUT GENERAL --- */
+.landing-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #fafafa; /* Un gri foarte deschis pentru fundal */
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- GUEST MODE (Login/Register) --- */
+.guest-mode .main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.auth-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 30px;
+}
+
+/* Butoane Generale */
+button {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: #262626;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #efefef;
+  color: #262626;
+}
+
+.btn-logout {
+  background-color: #ed4956; /* Roșu Instagram */
+  color: white;
+  width: 100%;
+  max-width: 200px;
+  margin-top: 20px;
+}
+
+/* --- APP MODE (Interfața Principală) --- */
+.app-mode .content-area {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto; /* Permite scroll doar în zona de conținut */
+  padding-bottom: 80px; /* Lasă loc pentru bara de jos */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Tab-uri generice (Search, Notif, Settings) */
+.tab-content {
+  text-align: center;
+  color: #555;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+}
+
+/* --- FEED (HOME TAB) --- */
+.feed-container {
+  width: 100%;
+  max-width: 470px; /* Lățime stil Instagram */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.post-card {
+  background-color: white;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.post-header {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #262626;
+  border-bottom: 1px solid #efefef;
+}
+
+.user-avatar {
+  font-size: 2rem;
+  color: #dbdbdb;
+}
+
+.post-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 600px;
+  object-fit: cover;
+}
+
+.post-footer {
+  padding: 12px;
+}
+
+.post-actions {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.action-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #262626;
+  transition: transform 0.1s;
+}
+
+.action-icon:active {
+  transform: scale(1.2);
+}
+
+.action-icon:hover {
+  color: #ed4956;
+}
+
+.post-caption {
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+  line-height: 1.4;
+  color: #262626;
+}
+
+.bold {
+  font-weight: 700;
+  margin-right: 5px;
+}
+
+.post-date {
+  font-size: 0.7rem;
+  color: #8e8e8e;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+/* --- CREATE POST (POST TAB) --- */
+.create-post-container {
+  width: 100%;
+  max-width: 470px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #dbdbdb;
+}
+
+.image-preview-area {
+  width: 100%;
+  height: 300px;
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px dashed #dbdbdb;
+  position: relative;
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Se asigură că poza se vede toată */
+  background-color: black;
+}
+
+.placeholder-preview {
+  color: #8e8e8e;
+  font-weight: 600;
+}
+
+.file-input {
+  font-size: 0.9rem;
+}
+
+.caption-input {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+  resize: none;
+  font-family: inherit;
+  outline: none;
+}
+
+.caption-input:focus {
+  border-color: #262626;
+}
+
+/* --- BOTTOM NAVIGATION --- */
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ffffff;
+  height: 60px;
+  border-top: 1px solid #dbdbdb;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+  /* Suport pentru iPhone X și mai noi */
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #8e8e8e; /* Gri inactiv */
+  font-size: 0.7rem;
+  cursor: pointer;
+  height: 100%;
+  transition: color 0.2s;
+}
+
+.nav-icon {
+  font-size: 1.5rem;
+  margin-bottom: 2px;
+}
+
+.nav-item.active {
+  color: #262626; /* Negru activ */
+}
