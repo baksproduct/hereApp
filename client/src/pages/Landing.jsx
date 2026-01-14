@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaHome, FaPlusSquare, FaSearch, FaBell, FaCog, FaUserCircle, FaHeart, FaRegHeart } from 'react-icons/fa'; // Am importat si FaRegHeart (inima goala)
+import { FaHome, FaPlusSquare, FaSearch, FaBell, FaCog, FaUserCircle, FaHeart, FaRegHeart } from 'react-icons/fa';
 import './Landing.css';
 
 const Landing = () => {
@@ -9,14 +9,12 @@ const Landing = () => {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [activeTab, setActiveTab] = React.useState('home');
   const [posts, setPosts] = React.useState([]);
-  const [currentUserId, setCurrentUserId] = React.useState(null); // ID-ul meu
+  const [currentUserId, setCurrentUserId] = React.useState(null);
 
-  // Stare pentru Creare Postare
-  const [newImage, setNewImage] = React.useState('');
+  const [newImage, setNewImage] = React. useState('');
   const [caption, setCaption] = React.useState('');
   const [loading, setLoading] = React.useState(false);
 
-  // 1. Initializare
   React.useEffect(() => {
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
@@ -30,7 +28,7 @@ const Landing = () => {
   const fetchPosts = async () => {
     try {
       const res = await fetch('http://localhost:5000/api/posts/all');
-      const data = await res.json();
+      const data = await res. json();
       if (res.ok) {
         setPosts(data);
       }
@@ -49,7 +47,6 @@ const Landing = () => {
     navigate('/login');
   };
 
-  // 2. Upload Imagine
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -80,43 +77,30 @@ const Landing = () => {
     }
   };
 
-  // 3. LOGICA DE LIKE (NOUĂ)
   const handleLike = async (postId) => {
     try {
       const res = await fetch(`http://localhost:5000/api/posts/like/${postId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: currentUserId })
+        body:  JSON.stringify({ userId: currentUserId })
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        // Actualizăm doar postarea care s-a schimbat în lista locală
-        setPosts(prevPosts => prevPosts.map(post => {
-          if (post._id === postId) {
-            return { ...post, likes: data.likes }; // Actualizăm lista de like-uri
-          }
-          return post;
-        }));
+        setPosts(posts.map(p => p._id === postId ? { ...p, likes: data.likes } : p));
       }
     } catch (err) {
-      console.error("Eroare la like:", err);
+      console.error(err);
     }
   };
 
-  // Helper: Verifică dacă am dat like
-  const hasLiked = (likesList) => {
-    // Tratăm cazul vechi (unde likes era număr) și cazul nou (array)
-    if (Array.isArray(likesList)) {
-      return likesList.includes(currentUserId);
-    }
-    return false;
+  const hasLiked = (likesArray) => {
+    return likesArray && likesArray.includes(currentUserId);
   };
 
-  const getLikeCount = (likesList) => {
-    if (Array.isArray(likesList)) return likesList.length;
-    return typeof likesList === 'number' ? likesList : 0;
+  const getLikeCount = (likesArray) => {
+    return likesArray ? likesArray.length :  0;
   };
 
   const renderContent = () => {
@@ -124,7 +108,7 @@ const Landing = () => {
       case 'home':
         return (
           <div className="feed-container">
-            {posts.length === 0 ? <p style={{marginTop: 20}}>Nu sunt postări.</p> : null}
+            {posts.length === 0 ? <p style={{marginTop: 20}}>Nu sunt postări. </p> : null}
             {posts.map((post) => (
               <div key={post._id} className="post-card">
                 <div className="post-header">
@@ -134,9 +118,8 @@ const Landing = () => {
                 <img src={post.image} alt="Post" className="post-image" />
                 <div className="post-footer">
                   <div className="post-actions">
-                    {/* Butonul de Like Interactiv */}
                     <div onClick={() => handleLike(post._id)} style={{ cursor: 'pointer' }}>
-                      {hasLiked(post.likes) ? (
+                      {hasLiked(post. likes) ? (
                         <FaHeart className="action-icon" style={{ color: '#ed4956' }} />
                       ) : (
                         <FaRegHeart className="action-icon" />
@@ -161,7 +144,7 @@ const Landing = () => {
           <div className="create-post-container">
             <h2>Postare Nouă</h2>
             <div className="image-preview-area">
-              {newImage ? <img src={newImage} alt="Preview" className="preview-img" /> : <div className="placeholder-preview">Previzualizare</div>}
+              {newImage ?  <img src={newImage} alt="Preview" className="preview-img" /> : <div className="placeholder-preview">Previzualizare</div>}
             </div>
             <input type="file" accept="image/*" onChange={handleFileChange} className="file-input" />
             <textarea placeholder="Scrie o descriere..." value={caption} onChange={(e) => setCaption(e.target.value)} className="caption-input" />
@@ -169,20 +152,27 @@ const Landing = () => {
           </div>
         );
 
-      case 'search': return <div className="tab-content"><h2>Caută</h2></div>;
-      case 'notif': return <div className="tab-content"><h2>Notificări</h2></div>;
-      case 'settings':
+      case 'search':
+        return <div className="tab-content"><h2>Caută</h2></div>;
+      
+      case 'notif': 
+        return <div className="tab-content"><h2>Notificări</h2></div>;
+      
+      case 'settings': 
         return (
           <div className="tab-content">
             <h2>Setări</h2>
+            <button className="btn-primary" onClick={() => navigate('/profile')} style={{marginBottom: '10px'}}>👤 Profil & Conexiuni</button>
             <button className="btn-logout" onClick={handleLogout}>Deconectare</button>
           </div>
         );
-      default: return <div>Home</div>;
+      
+      default:
+        return <div>Home</div>;
     }
   };
 
-  if (!isAuthenticated) {
+  if (! isAuthenticated) {
     return (
       <div className="landing-container guest-mode">
         <div className="main-content">
@@ -200,9 +190,9 @@ const Landing = () => {
     <div className="landing-container app-mode">
       <div className="content-area">{renderContent()}</div>
       <div className="bottom-nav">
-        <div className={`nav-item ${activeTab === 'home' ? 'active' : ''}`} onClick={() => setActiveTab('home')}><FaHome className="nav-icon" /><span>Home</span></div>
+        <div className={`nav-item ${activeTab === 'home' ? 'active' :  ''}`} onClick={() => setActiveTab('home')}><FaHome className="nav-icon" /><span>Home</span></div>
         <div className={`nav-item ${activeTab === 'post' ? 'active' : ''}`} onClick={() => setActiveTab('post')}><FaPlusSquare className="nav-icon" /><span>Post</span></div>
-        <div className={`nav-item ${activeTab === 'search' ? 'active' : ''}`} onClick={() => setActiveTab('search')}><FaSearch className="nav-icon" /><span>Search</span></div>
+        <div className={`nav-item ${activeTab === 'search' ?  'active' : ''}`} onClick={() => setActiveTab('search')}><FaSearch className="nav-icon" /><span>Search</span></div>
         <div className={`nav-item ${activeTab === 'notif' ? 'active' : ''}`} onClick={() => setActiveTab('notif')}><FaBell className="nav-icon" /><span>Notif</span></div>
         <div className={`nav-item ${activeTab === 'settings' ? 'active' : ''}`} onClick={() => setActiveTab('settings')}><FaCog className="nav-icon" /><span>Settings</span></div>
       </div>

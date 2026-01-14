@@ -4,6 +4,11 @@ const dotenv = require('dotenv');
 const { usersDb } = require('./db');
 const authRoutes = require('./routes/auth');
 const postRoutes = require('./routes/posts'); // <-- Importăm rutele de postări
+const connectionRoutes = require('./routes/connections');
+const qrcodeRoutes = require('./routes/qrcode.js');
+
+app.use('/api/connections', connectionRoutes);
+app.use('/api/qrcode', qrcodeRoutes);
 
 dotenv.config();
 

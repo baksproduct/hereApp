@@ -6,7 +6,7 @@ require('dotenv').config();
 const SECRET_KEY = process.env.DB_SECRET;
 
 const afterSerialization = (plaintext) => {
-  return CryptoJS.AES.encrypt(plaintext, SECRET_KEY).toString();
+  return CryptoJS.AES. encrypt(plaintext, SECRET_KEY).toString();
 };
 
 const beforeDeserialization = (ciphertext) => {
@@ -22,7 +22,7 @@ const usersDb = Datastore.create({
   beforeDeserialization
 });
 
-// Baza de date Posts (NOU)
+// Baza de date Posts
 const postsDb = Datastore.create({
   filename: path.join(__dirname, 'data', 'posts.db'),
   autoload: true,
@@ -30,4 +30,20 @@ const postsDb = Datastore.create({
   beforeDeserialization
 });
 
-module.exports = { usersDb, postsDb };
+// Baza de date QR Codes (NOUĂ)
+const qrCodesDb = Datastore.create({
+  filename: path.join(__dirname, 'data', 'qrcodes.db'),
+  autoload: true,
+  afterSerialization,
+  beforeDeserialization
+});
+
+// Baza de date Conexiuni (NOUĂ)
+const connectionsDb = Datastore.create({
+  filename: path.join(__dirname, 'data', 'connections.db'),
+  autoload: true,
+  afterSerialization,
+  beforeDeserialization
+});
+
+module.exports = { usersDb, postsDb, qrCodesDb, connectionsDb };

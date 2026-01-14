@@ -1,0 +1,175 @@
+.profile-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background:  white;
+  min-height: 100vh;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom:  30px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.back-btn {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.profile-header h1 {
+  margin:  0;
+  font-size: 1.8rem;
+}
+
+.profile-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #eee;
+}
+
+.tab-btn {
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #666;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s;
+}
+
+.tab-btn.active{
+  color: #333;
+  border-bottom-color: #262626;
+}
+
+.profile-content,
+.connections-content {
+  padding: 20px 0;
+}
+
+.info-text {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.qr-display {
+  text-align: center;
+  background: #f9f9f9;
+  padding: 30px;
+  border-radius:  12px;
+  margin:  20px 0;
+}
+
+.qr-image {
+  width: 250px;
+  height: 250px;
+  border-radius:  8px;
+  margin-bottom: 20px;
+  background: white;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.qr-info {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: left;
+}
+
+.qr-info p {
+  margin: 10px 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.btn-generate,
+.btn-copy {
+  padding: 12px 24px;
+  background: #262626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin:  10px 0;
+  transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-generate:hover,
+.btn-copy:hover {
+  background: #333;
+}
+
+.btn-generate:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.connections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.connection-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border:  1px solid #eee;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.username {
+  font-weight: 600;
+  color: #333;
+  font-size: 1rem;
+}
+
+.btn-remove {
+  padding: 8px 12px;
+  background: #ed4956;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-remove:hover {
+  background:  #d63850;
+}
+
+.no-connections {
+  text-align: center;
+  color: #999;
+  padding: 40px 20px;
+}
+
+.error-msg {
+  background: #ffe6e6;
+  color: #c33;
+  padding: 12px;
+  border-radius:  6px;
+  margin-bottom: 20px;
+}
